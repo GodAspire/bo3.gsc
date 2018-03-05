@@ -1,0 +1,30 @@
+{
+    "name": "gsc",
+    "displayName": "gsc",
+    "description": "Support for Call of Duty: Black Ops III's scripts",
+    "version": "0.0.1",
+    "publisher": "Aspire",
+    "engines": {
+        "vscode": "^1.20.0"
+    },
+    "categories": [
+        "Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "gsc",
+            "aliases": ["GSC", "gsc"],
+            "extensions": [".gsc",".csc",".gsh"],
+            "configuration": "./config.json"
+        }],
+        "grammars": [{
+            "language": "gsc",
+            "scopeName": "source.gsc",
+            "path": "./syntaxes/gsc.tmLanguage"
+        }],
+        "snippets": [{
+            "language": "gsc",
+            "path": "./snippets/snippets.json"
+        }]
+    }
+}

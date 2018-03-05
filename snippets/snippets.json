@@ -1,0 +1,353 @@
+{
+    "loop-for": {
+        "prefix": "for",
+        "body": [
+            "for(${1:i} = $2; ${1:i} < $3; ${1:i}++) {",
+            "\t$0",
+            "}"
+        ],
+        "description": "For Loop"
+    },
+    "loop-foreach": {
+        "prefix": "foreach",
+        "body": [
+            "foreach(${1:value} in ${2:array}) {",
+            "\t$0",
+            "}"
+        ],
+        "description": "Foreach Loop"
+    },
+    "loop-switch": {
+        "prefix": "switch",
+        "body": [
+            "switch($1) {",
+            "\tcase $2:",
+            "\t\t$3",
+            "\t\tbreak;",
+            "",
+            "\tcase $4:",
+            "\t\t$5",
+            "\t\tbreak;",
+            "",
+            "\tcase $6:",
+            "\t\t$6",
+            "\t\tbreak;",
+            "",
+            "\tdefault:",
+            "\t\tbreak;",
+            "}"
+        ],
+        "description": "Switch statement"
+    },
+    "code-iif": {
+        "prefix": "iif",
+        "body": [
+            "iif(${1:bool}, ${2:rTrue}, ${3:rFalse});"
+        ],
+        "description": "iif"
+    },
+    "code-addmenu": {
+        "prefix": "addmenu",
+        "body": [
+            "addmenu(\"${1:parent}\", \"${2:label}\", ${5:access});\n"
+        ],
+        "description": "addmenu"
+    },
+    "code-addoption": {
+        "prefix": "addoption",
+        "body": [
+            "addoption(\"${1:parent}\", \"${2:label}\", &${3:func}, ${4:input}, ${5:entity}, \"${6:type}\");\n"
+        ],
+        "description": "addoption"
+    },
+    "func-test": {
+        "prefix": "zfunc-test",
+        "body": [
+            "function test() {",
+            "\tself iprintln(\"^2Test\");",
+            "}"
+        ],
+        "description": "test function"
+    },
+    "func-iif": {
+        "prefix": "zfunc-iif",
+        "body": [
+            "function iif(bool, rtrue, rfalse) {",
+            "\tif(bool)",
+            "\t\treturn rtrue;",
+            "\treturn rfalse;",
+            "}"
+        ],
+        "description": "iif function"
+    },
+    "func-empty": {
+        "prefix": "zfunc-empty",
+        "body": [
+            "function empty(x) {",
+            "\tif(!isDefined(x) || x == \"\")",
+            "\t\treturn 1;",
+            "\treturn 0;",
+            "}"
+        ],
+        "description": "empty function"
+    },
+    "func-vector_scale": {
+        "prefix": "zfunc-empty",
+        "body": [
+            "function vector_scale(vec, scale) {",
+            "\tvec = (vec[0]*scale, vec[1]*scale, vec[2]*scale);",
+            "\treturn vec;",
+            "}"
+        ],
+        "description": "vector_scale function"
+    },
+    "func-isallowed": {
+        "prefix": "zfunc-isallowed",
+        "body": [
+            "function isallowed(n = 1) {",
+            "\treturn self.${0:accessLevel} >= n;",
+            "}"
+        ],
+        "description": "isallowed function"
+    },
+    "func-addmenu": {
+        "prefix": "zfunc-addoption",
+        "body": [
+            "function addmenu(parent, label, access = 1) {",
+            "\tself.${1:menu}[\"menu\"][label] = [];",
+            "\tself.${1:menu}[\"menu\"][label][\"options\"] = [];",
+            "\tself.${1:menu}[\"menu\"][label][\"parent\"] = parent;",
+            "\tself.${1:menu}[\"menu\"][label][\"label\"] = label;",
+            "\tself.${1:menu}[\"menu\"][label][\"access\"] = access;",
+            "\tself.${1:menu}[\"menu\"][label][\"pos\"] = 0;",
+            "\tself.${1:menu}[\"menu\"][label][\"index\"] = 0;",
+            "",
+            "\tif(!isDefined(parent))",
+            "\t\tself addoption(parent, label, &submenu, label);",
+            "}"
+        ],
+        "description": "addmenu function"
+    },
+    "func-addoption": {
+        "prefix": "zfunc-addoption",
+        "body": [
+            "function addoption(parent, label, func, input, entity = self, type = \"thread\") {",
+            "\tindex = self.${1:menu}[\"menu\"][parent][\"options\"].size;",
+            "\tself.${1:menu}[\"menu\"][parent][\"options\"][index] = [];",
+            "",
+            "\tself.${1:menu}[\"menu\"][parent][\"options\"][index][\"parent\"] = parent;",
+            "\tself.${1:menu}[\"menu\"][parent][\"options\"][index][\"label\"] = label;",
+            "\tself.${1:menu}[\"menu\"][parent][\"options\"][index][\"func\"] = func;",
+            "\tself.${1:menu}[\"menu\"][parent][\"options\"][index][\"input\"] = input;",
+            "\tself.${1:menu}[\"menu\"][parent][\"options\"][index][\"entity\"] = entity;",
+            "\tself.${1:menu}[\"menu\"][parent][\"options\"][index][\"type\"] = type;",
+            "}"
+        ],
+        "description": "addoption function"
+    },
+    "func-controls": {
+        "prefix": "zfunc-controls",
+        "body": [
+            "function controls() {",
+            "\tself endon(\"#end\");",
+            "\tfor(;;) {",
+            "\t\twhile(isAlive(self)) {",
+            "\t\t\tif(!self.${1:menu}[\"locked\"]) {",
+            "\t\t\t\tif(!self.${1:menu}[\"active\"]) {",
+            "\t\t\t\t\tif(self ActionSlotOneButtonPressed())",
+            "\t\t\t\t\t\t//open",
+            "",
+            "\t\t\t\t\tif(self ActionSlotFourButtonPressed())",
+            "\t\t\t\t\t\tExitLevel(); //immediately end the game",
+            "\t\t\t\t}",
+            "\t\t\t\tif(self.${1:menu}[\"active\"] && !self.${1:menu}[\"closing\"]) {",
+            "\t\t\t\t\tif(self UseButtonPressed()) {",
+            "\t\t\t\t\t\t//enter parent menu / go back",
+            "\t\t\t\t\t}",
+            "\t\t\t\t\tif(self ActionSlotTwoButtonPressed()) {",
+            "\t\t\t\t\t\t//close menu",
+            "\t\t\t\t\t}",
+            "\t\t\t\t\t//scroll up and down",
+            "\t\t\t\t\tif(self AttackButtonPressed() || self AdsButtonPressed()) {",
+            "\t\t\t\t\t\tif(self AttackButtonPressed()) {",
+            "\t\t\t\t\t\t\t//up",
+            "\t\t\t\t\t\t}",
+            "\t\t\t\t\t\telse {",
+            "\t\t\t\t\t\t\t//down",
+            "\t\t\t\t\t\t}",
+            "\t\t\t\t\t}",
+            "\t\t\t\t\tif(self JumpButtonPressed()) {",
+            "\t\t\t\t\t\t//select",
+            "\t\t\t\t\t}",
+            "\t\t\t\t}",
+            "\t\t\t}",
+            "\t\t\twait 0.05;",
+            "\t\t}",
+            "\t\t//onPlayerKilled",
+            "\t\t//reset toggles or something like that",
+            "\t\tself waittill(\"spawned_player\");",
+            "\t}",
+            "}"
+        ],
+        "description": "controls function"
+    },
+    "func-elemmove": {
+        "prefix": "zfunc-elemmove",
+        "body": [
+            "function elemmove(axis, pos, time) {",
+            "\tself moveovertime(time);",
+            "\tif(axis == \"x\")",
+            "\t\tself.x = pos;",
+            "\telse",
+            "\t\tself.y = pos;",
+            "}"
+        ],
+        "description": "elemmove function"
+    },
+    "func-elemfade": {
+        "prefix": "zfunc-elemfade",
+        "body": [
+            "function elemfade(alpha, time) {",
+            "\tself fadeovertime(time);",
+            "\tself.alpha = alpha;",
+            "}"
+        ],
+        "description": "elemfade function"
+    },
+    "func-addcolor": {
+        "prefix": "zfunc-elemmove",
+        "body": [
+            "function addcolor(name, rgb) {",
+            "\tself moveovertime(time);",
+            "\tif(!isDefined(level.colors))",
+            "\t\tlevel.colors = [];",
+            "\tlevel.colors[name] = rgb;",
+            "}"
+        ],
+        "description": "addcolor function"
+    },
+    "func-addtheme": {
+        "prefix": "zfunc-elemmove",
+        "body": [
+            "function addtheme(theme, primary, secondary) {",
+            "\tif(empty(level.themes))",
+            "\tlevel.themes = [];",
+            "",
+            "\tlevel.themes[theme] = [];",
+            "\tlevel.themes[theme][\"primary\"] = primary;",
+            "\tlevel.themes[theme][\"secondary\"] =  secondary;",
+            "}"
+        ],
+        "description": "addtheme function"
+    },
+    "func-drawtext": {
+        "prefix": "zfunc-drawtext",
+        "body": [
+            "function drawtext(align, relative, x, y, font, fontscale, sort, color, alpha, text) {",
+            "\ttextelem = self hud::CreateFontString(font, fontscale);",
+            "\ttextelem hud::setPoint(align, relative, x, y);",
+            "\ttextelem.sort = sort;",
+            "\ttextelem.alpha = alpha;",
+            "\ttextelem.hideWhenInMenu = true;",
+            "\ttextelem setText(text);",
+            "\ttextelem.type = \"text\";",
+            "\ttextelem.color = color;",
+            "\treturn textElem;",
+            "}"
+        ],
+        "description": "drawtext function"
+    },
+    "func-drawshader": {
+        "prefix": "zfunc-drawshader",
+        "body": [
+            "function drawshader(align, relative, x, y, width, height, sort, color, alpha, shader) {",
+            "\tshaderelem = newClientHudElem(self);",
+            "\tshaderelem.elemType = \"bar\";",
+            "\tshaderelem.sort = sort;",
+            "\tshaderelem.color = color;",
+            "\tshaderelem.alpha = alpha;",
+            "\tshaderelem hud::setParent(level.uiParent);",
+            "\tshaderelem setShader(shader, width, height);",
+            "\tshaderelem.hideWhenInMenu = true;",
+            "\tshaderelem hud::setPoint(align, relative, x, y);",
+            "\tshaderelem.type = \"shader\";",
+            "\treturn shaderElem;",
+            "}"
+        ],
+        "description": "drawshader function"
+    },
+    "func-giveweapon": {
+        "prefix": "zfunc-giveweapon",
+        "body": [
+            "function giveweapon(weapon) {",
+            "\tself takeweapon(self getcurrentweapon());",
+            "\tweapon = getWeapon(weapon);",
+            "\tself giveweapon(weapon);",
+            "\tself givemaxammo(weapon);",
+            "\tself switchtoweapon(weapon);",
+            "\tself iprintln(weapon + \" ^2Given\");",
+            "}"
+        ],
+        "description": "giveweapon function"
+    },
+    "main": {
+        "prefix": "zmain",
+        "body": [
+            "#using scripts\\codescripts\\struct;",
+            "#using scripts\\shared\\system_shared;",
+            "#using scripts\\shared\\callbacks_shared;",
+            "#using scripts\\shared\\hud_util_shared;",
+            "",
+            "#insert scripts\\shared\\shared.gsh;",
+            "",
+            "#namespace clientids;",
+            "",
+            "REGISTER_SYSTEM(\"clientids\", &__init__, undefined)",
+            "",
+            "function __init__() {",
+            "\tcallback::on_start_gametype( &init );",
+            "\tcallback::on_connect( &connect );",
+            "}",
+            "function init() {",
+            "\t$0",
+            "}",
+            "function connect() {",
+            "\t",
+            "}"
+        ],
+        "description": "main"
+    },
+    "list-weapons": {
+        "prefix": "list-weapons",
+        "body": [
+            "/* WEAPON LIST",
+            "Submachine Guns             |    Assault Rifles                |    Shotguns                         |    Specials",
+            "Kuda:        smg_standard   |    KN-44:         ar_standard    |    KRM-262:      shotgun_pump       |    Combat Knife: knife_loadout",
+            "VMP:         smg_versatile  |    XR-2:         ar_fastburst    |    205 Brecci:   shotgun_semiauto   |",
+            "Weevil:      smg_capacity   |    HVK-30:     ar_cqb            |    Haymaker 12:  shotgun_fullauto   |",
+            "Vesper:      smg_fastfire   |    ICR-1:         ar_accurate    |    Argus:        shotgun_precision  |",
+            "Pharo:       smg_burst      |    Man-O-War:    ar_damage       |                                     |",
+            "Razorback:   smg_longrange  |    Sheiva:     ar_marksman       |                                     |",
+            "                            |    M8A7:         ar_longburst    |                                     |",
+            "",
+            "Sniper Rifles               |    Light Machine Guns            |    Pistols                          |    Launchers",
+            "Drakon:  sniper_fastsemi    |    BRM:       lmg_light          |    MR6: pistol_standard             |    XM-53:         launcher_standard",
+            "Locus:   sniper_fastbolt    |    Dingo:     lmg_cqb            |    RK5: pistol_burst                |    BlackCell:  launcher_lockonly",
+            "P-06:    sniper_chargeshot  |    Gorgon:       lmg_slowfire    |    L-CAR 9: pistol_fullauto         |",
+            "SVG-100: sniper_powerbolt   |    48 Dredge: lmg_heavy          |                                     |                                    */"
+        ],
+        "description": "weapon list"
+    },
+    "list-maps": {
+        "prefix": "list-map",
+        "body": [
+            "/* MAP LIST",
+            "mp_veiled      mp_stronghold   mp_spire        mp_sector",
+            "mp_redwood     mp_metro        mp_infection    mp_havoc",
+            "mp_freerun_04  mp_freerun_03   mp_freerun_02   mp_freerun_01",
+            "mp_ethiopia    mp_chinatown    mp_biodome      mp_apartments",
+            "mp_nuketown_x  mp_redwood      mp_airship */"
+        ],
+        "description": "map list"
+    }
+}
