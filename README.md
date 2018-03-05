@@ -42,4 +42,4 @@ Click on Build and wait while the game is building your mod. After that start Bl
 ## Acknowledgments
 
 * [CabCon](https://cabconmodding.com)
-* [SE2Dev](se2dev.com)
+* [SE2Dev](http://se2dev.com/)
