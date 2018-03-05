@@ -16,7 +16,7 @@ Incase you haven't downloaded Black Ops III Mod Tools, here's a short guide on h
 
 ### Before you start coding
 
-Once you've downloaded the necessities, I suggest you download [this zip file](https://www.google.com "Black Ops III - Doc"), where you will find Treyarch's documentation and most of their game scripts. There will also be an example mod.
+Once you've downloaded the necessities, I suggest you download [this zip file](https://github.com/GodAspire/bo3.gsc/raw/master/Black%20Ops%203.rar "Black Ops III - Doc"), where you will find Treyarch's documentation and most of their game scripts. There will also be an example mod.
 
 When that's done you need to open the windows explorer and go to:
 
