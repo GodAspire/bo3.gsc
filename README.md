@@ -1,10 +1,10 @@
 # GSC for VS Code
 
-This neat little extension allows you to code your .gsc scripts in VS Code with full support for Black Ops III.
+This neat little extension allows you to code your .gsc scripts in VS Code with full support for Black Ops III. 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+The extension also includes quite a lot of code snippets and some other features.
 
 ### Prerequisites
 
